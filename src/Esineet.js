@@ -11,7 +11,7 @@ const Esineet = (props) => {
     const [valittuPaikkakunta, setValittuPaikkakunta] = useState("")
     useEffect(()=>{
         async function haeDataa(){
-            let result = await axios('https://api.huuto.net/1.1/categories/'+props.id+'/items?area='+valittuPaikkakunta
+            let result = await axios('https://api.huuto.net/1.1/categories/'+props.id+'/items?area='+valittuPaikkakunta+'&words='+searchVal
             )
             //console.log(result)
             let a = JSON.parse(result.request.response).items
@@ -33,7 +33,6 @@ const Esineet = (props) => {
     }
 
     const inputFieldHandler = (event) => {
-        console.log(event.target.value)
         setSearchVal(event.target.value)
     }
     
@@ -42,11 +41,7 @@ const Esineet = (props) => {
         <button onClick={paikkakuntaHelsinkiPainettu}>Helsinki</button>
         <input onChange={(e) => inputFieldHandler(e)}></input>
 
-        {!dataNoudettu ? "Odotetaan dataa..." :  data.map(alkio=>{
-            if (alkio.title.toUpperCase().includes(searchVal.toUpperCase())){
-                return ( <div>{alkio.title +" Paikassa:"+alkio.location}</div>)
-            }
-        })}
+        {!dataNoudettu ? "Odotetaan dataa..." :  data.map(alkio=><div>{alkio.title +" Paikassa:"+alkio.location}</div>)}
         </div>)
 
 }
